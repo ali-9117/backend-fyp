@@ -45,4 +45,47 @@ class AuthController extends Controller
         $user = Auth::user();
         return response()->json(['message' => 'User signed in successfully', 'user' => $user,'user_type' => $user->user_type,], 200);
     }
+
+public function ForgetPassword(Request $request){
+
+
+    $user = User::where('name', $request->name)
+        ->where('email', $request->email)
+        ->first();
+
+      return response()->json(['success' => $user]);
+
+
+}
+
+
+    public function NewPassword(Request $request, $email)
+    {
+        $user = User::where('email', $email)
+            ->first();
+
+        if ($user) {
+            $user->update(['password' => Hash::make($request->password)]);
+            return response()->json(['success' => 'Password updated successfully'], 200);
+        } else {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    }
+
+
+    public function ChangePassword(Request $request)
+    {
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
+
+            return response()->json(['success' => $user]);
+        } else
+        {
+          return response()->json(['error' => 'not found']);        }
+
+    }
+
+
 }

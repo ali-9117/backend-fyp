@@ -16,7 +16,7 @@ class AppointmentController extends Controller
         {
         $validated =    $request->validate([
                 'name' => 'required|string|max:255',
-                'phone' => 'nullable|integer',
+                'phone' => 'nullable|string|min:0',
                 'email' => 'nullable|string|email|max:255',
                 'car_model' => 'nullable|string|max:255',
                 'car_year' => 'nullable|string|max:255',
@@ -119,7 +119,7 @@ public function Updateprogress(Request $request, $id)
     $appointment = Appointment::findorFail($id);
 
     $appointment->update([
-        'inspection'=>$request->inspection,
+        'inspection'=>$request->has('inspection')? $request->inspection : false,
         'wash' => $request->has('wash')? $request->wash : false,
         'detailing'=>$request->has('detailing')? $request->detailing : false,
         'final_touches'=>$request->has('final_touches')? $request->final_touches : false,

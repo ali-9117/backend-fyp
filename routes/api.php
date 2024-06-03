@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarWrapController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,20 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //login signup routes
-
 Route::post('signup', [AuthController::class, 'signup'])->name('signup');
 Route::post('signin', [AuthController::class, 'signin']);
 
 
 //feedback route
 use App\Http\Controllers\FeedbackController;
-
 Route::post('/feedback', [FeedbackController::class, 'store']);
 Route::get('/feedbackentry',[FeedbackController::class,'show']);
 
 //appopintments
 use App\Http\Controllers\AppointmentController;
-
 Route::post('/appointments', [AppointmentController::class,'store']);
 Route::get('/Getappointments/{id}',[AppointmentController::class,'GetAppointment']);
 Route::delete('/Delappointments/{id}',[AppointmentController::class,'DeleteAppointment']);
@@ -45,6 +43,25 @@ Route::post('/Updateprogress/{id}',[AppointmentController::class,'Updateprogress
 use App\Http\Controllers\ContactUsController;
 Route::post('/contact', [ContactUsController::class,'store']);
 Route::get('/contactentry',[ContactUsController::class,'show']);
+
+
+
+//forget password
+Route::post('/forgot-password',[AuthController::class,'ForgetPassword']);
+Route::post('/reset-password/{email}',[AuthController::class,'NewPassword']);
+
+//change password
+Route::post('/change-password',[AuthController::class,'ChangePassword']);
+
+
+//carWrap
+Route::post('/carwrap',[CarWrapController::class,'store']);
+Route::get('/carwrapentry',[CarWrapController::class,'show']);
+
+
+
+
+
 
 
 

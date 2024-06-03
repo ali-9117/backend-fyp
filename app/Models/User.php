@@ -48,5 +48,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Appointment::class);
     }
-
+    public function Carwrap()
+    {
+        return $this->hasMany(CarWrap::class);
+    }
 }
